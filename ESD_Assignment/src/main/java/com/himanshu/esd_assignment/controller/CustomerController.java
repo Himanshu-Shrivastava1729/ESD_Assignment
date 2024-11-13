@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class CustomerController {
     private final CustomerService customerService;
-    @GetMapping("/")
+    @GetMapping("/{email}")
     public ResponseEntity<CustomerResponse> getCustomer(@PathVariable("email") String email) {
         return ResponseEntity.ok(customerService.retrieveCustomer(email));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<String> createCustomer(@RequestBody @Valid CustomerRequest request) {
         return ResponseEntity.ok(customerService.createCustomer(request));
     }
+
 }
