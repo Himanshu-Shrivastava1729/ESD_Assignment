@@ -50,4 +50,16 @@ public class CustomerService {
 
         return jwtHelper.generateToken(request.email());
     }
+
+    public boolean deleteCustomerByEmail(String email) {
+        boolean isPresent = false;
+        if(getCustomer(email) != null) {isPresent = true;}
+        if(isPresent)
+        {
+            customerRepo.delete(getCustomer(email));
+            return true;
+        }
+        else
+            return false;
+    }
 }
