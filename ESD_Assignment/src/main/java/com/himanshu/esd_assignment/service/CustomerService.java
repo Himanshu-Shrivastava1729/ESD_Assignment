@@ -62,4 +62,17 @@ public class CustomerService {
         else
             return false;
     }
+
+    public boolean updateCustomer(CustomerRequest request)
+    {
+        Customer customer = customerMapper.toCustomer(request);
+        Customer oldCustomer = getCustomer(customer.getEmail());
+        if(oldCustomer == null) return false;
+        oldCustomer.setFirstName(customer.getFirstName());
+        oldCustomer.setLastName(customer.getLastName());
+        oldCustomer.setEmail(customer.getEmail());
+        oldCustomer.setPassword(customer.getPassword());
+        customerRepo.save(oldCustomer);
+        return true;
+    }
 }

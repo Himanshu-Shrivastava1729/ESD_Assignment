@@ -2,6 +2,7 @@ package com.himanshu.esd_assignment.controller;
 
 import com.himanshu.esd_assignment.dto.CustomerRequest;
 import com.himanshu.esd_assignment.dto.CustomerResponse;
+import com.himanshu.esd_assignment.entity.Customer;
 import com.himanshu.esd_assignment.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,17 @@ public class CustomerController {
         else {
             return ResponseEntity.notFound().build();
         }
-
+    }
+    @PutMapping("/update")
+    public ResponseEntity<Void> updateCustomer(@RequestBody @Valid CustomerRequest request)
+    {
+        boolean isUpdated = customerService.updateCustomer(request);
+        if(isUpdated) {
+            return ResponseEntity.noContent().build();
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
