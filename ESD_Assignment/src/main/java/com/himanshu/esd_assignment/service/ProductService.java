@@ -7,6 +7,7 @@ import com.himanshu.esd_assignment.repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,5 +59,9 @@ public class ProductService {
         assert product != null;
         productRepo.save(product);
         return "Product updated";
+    }
+
+    public List<Product> searchByPrice() {
+        return productRepo.searchByPrice();
     }
 }

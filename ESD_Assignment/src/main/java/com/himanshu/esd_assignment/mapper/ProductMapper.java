@@ -14,6 +14,7 @@ public class ProductMapper {
                 .quantity(request.quantity())
                 .brand(request.brand())
                 .categoryId((long) request.categoryId())
+                .price((long) request.price())
                 .build();
     }
     public ProductResponse toProductResponse(Product product) {

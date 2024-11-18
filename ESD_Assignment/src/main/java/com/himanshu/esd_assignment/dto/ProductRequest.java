@@ -20,10 +20,10 @@ public record ProductRequest(
         String brand,
 
         @JsonProperty("c_id")
-        long categoryId
+        long categoryId,
 
-
-
+        @JsonProperty("price")
+        long price
 )
 {
 

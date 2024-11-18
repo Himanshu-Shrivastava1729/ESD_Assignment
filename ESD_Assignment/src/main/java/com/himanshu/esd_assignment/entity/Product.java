@@ -32,4 +32,7 @@ public class Product
 
     @Column(name = "c_id")
     private Long categoryId;
+
+    @Column(name = "price")
+    private double price;
 }

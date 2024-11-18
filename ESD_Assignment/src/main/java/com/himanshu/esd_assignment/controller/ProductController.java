@@ -8,8 +8,11 @@ import com.himanshu.esd_assignment.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.BatchTransactionManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,5 +43,11 @@ public class ProductController {
         return ResponseEntity.ok(res);
     }
 
-//    @PutMapping("/update/")
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> searchByPrice()
+    {
+        List<Product> res = productService.searchByPrice();
+        System.out.println(res);
+        return ResponseEntity.ok(res);
+    }
 }
