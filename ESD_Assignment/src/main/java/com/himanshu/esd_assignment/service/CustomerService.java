@@ -10,19 +10,24 @@ import com.himanshu.esd_assignment.helper.JWTHelper;
 import com.himanshu.esd_assignment.mapper.CustomerMapper;
 import com.himanshu.esd_assignment.repo.CustomerRepo;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static java.lang.String.format;
 
 @Service
-@RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepo customerRepo;
     private final CustomerMapper customerMapper;
     private final EncryptionService encryptionService;
     private final JWTHelper jwtHelper;
+
+    public CustomerService(CustomerRepo customerRepo, CustomerMapper customerMapper, EncryptionService encryptionService, JWTHelper jwtHelper) {
+        this.customerRepo = customerRepo;
+        this.customerMapper = customerMapper;
+        this.encryptionService = encryptionService;
+        this.jwtHelper = jwtHelper;
+    }
+
     public String createCustomer(CustomerRequest request) {
         Customer customer = customerMapper.toCustomer(request);
         customer.setPassword(encryptionService.encode(customer.getPassword()));
@@ -44,7 +49,7 @@ public class CustomerService {
 
     public String login(@Valid LoginRequest request) {
         Customer customer = getCustomer(request.email());
-        if(!encryptionService.validates(request.password(), customer.getPassword())) {
+        if (!encryptionService.validates(request.password(), customer.getPassword())) {
             return "Wrong Password or Email";
         }
 
@@ -53,21 +58,20 @@ public class CustomerService {
 
     public boolean deleteCustomerByEmail(String email) {
         boolean isPresent = false;
-        if(getCustomer(email) != null) {isPresent = true;}
-        if(isPresent)
-        {
+        if (getCustomer(email) != null) {
+            isPresent = true;
+        }
+        if (isPresent) {
             customerRepo.delete(getCustomer(email));
             return true;
-        }
-        else
+        } else
             return false;
     }
 
-    public boolean updateCustomer(CustomerRequest request)
-    {
+    public boolean updateCustomer(CustomerRequest request) {
         Customer customer = customerMapper.toCustomer(request);
         Customer oldCustomer = getCustomer(customer.getEmail());
-        if(oldCustomer == null) return false;
+        if (oldCustomer == null) return false;
         oldCustomer.setFirstName(customer.getFirstName());
         oldCustomer.setLastName(customer.getLastName());
         oldCustomer.setEmail(customer.getEmail());

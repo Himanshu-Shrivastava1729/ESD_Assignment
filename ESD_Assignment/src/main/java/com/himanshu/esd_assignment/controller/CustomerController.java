@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/customer")
 public class CustomerController {
     private final CustomerService customerService;
     @GetMapping("/{email}")
@@ -19,7 +20,7 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.retrieveCustomer(email));
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<String> createCustomer(@RequestBody @Valid CustomerRequest request) {
         return ResponseEntity.ok(customerService.createCustomer(request));
     }
@@ -33,7 +34,7 @@ public class CustomerController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PutMapping("/update")
+    @PutMapping("/")
     public ResponseEntity<Void> updateCustomer(@RequestBody @Valid CustomerRequest request)
     {
         boolean isUpdated = customerService.updateCustomer(request);

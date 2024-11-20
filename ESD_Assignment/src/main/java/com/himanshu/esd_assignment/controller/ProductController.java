@@ -16,34 +16,34 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-
+@RequestMapping("/product")
 public class ProductController {
     @Autowired
     ProductService productService;
-    @GetMapping("/getproduct/{pname}")
+    @GetMapping("/{pname}")
     public ResponseEntity<ProductResponse> getProduct(@PathVariable String pname) {
         return  ResponseEntity.ok(productService.retrieveProduct(pname));
     }
 
-    @PostMapping("/createproduct")
+    @PostMapping("/")
     public ResponseEntity<String> createProduct(@RequestBody @Valid ProductRequest request) {
         String res = productService.createProduct(request);
         return ResponseEntity.ok(res);
     }
 
-    @DeleteMapping("/delete/{pid}")
+    @DeleteMapping("/{pid}")
     public ResponseEntity<String> deleteProduct(@PathVariable int pid) {
         String res = productService.deleteProduct(pid);
         return ResponseEntity.ok(res);
     }
 
-    @PutMapping("/updateproduct")
+    @PutMapping("/")
     public ResponseEntity<String> updateProduct(@RequestBody ProductRequest request) {
         String res = productService.updateProduct(request);
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/")
     public ResponseEntity<List<Product>> searchByPrice()
     {
         List<Product> res = productService.searchByPrice();
